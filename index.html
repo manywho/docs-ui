@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+    </head>
+
+    <body>
+        <h1>Flow UI</h1>
+
+        <h2>UI Reference documentation</h2>
+        <p>
+            <a href="public/index.html">Example</a>
+        </p>
+
+        <h2>Getting Started with custom components and debugging</h2>
+        <p>For creating and debugging a custom component you can run a simple server to serve the files from this folder.</p>
+        <p>
+            The http-server-spa npm package is ideal for this. To install it globally on your computer (node required), run `npm install http-server-spa -g`.
+        
+        </p>
+        <p>
+
+            Navigate to this directory using a terminal and run `http-server-spa . index.html 8080`.
+        </p>
+        <p>
+            Flow will now be accessible at http://localhost:8080, however you will need to add the same path and parameters as required on https://flow.boomi.com to run a flow. 
+
+        </p>
+
+        <p>
+            For example:
+            <a href="custom-input/custom-player.html?tenant-id=b176772a-ffc7-4ed6-88cb-6f44dffcd784&flow-id=bc9dc111-5187-4ae5-a05b-a363372da4a0&flow-version-id=39c4305b-8d5f-4c72-b33b-8f12270c9bc5">Example</a>
+
+        </p>
+        <p>
+
+            http://localhost:8080/b176772a-ffc7-4ed6-88cb-6f44dffcd784/play/default?flow-id=bc9dc111-5187-4ae5-a05b-a363372da4a0&flow-version-id=39c4305b-8d5f-4c72-b33b-8f12270c9bc5
+        </p>
+        <p>
+
+            This will load a flow that uses our custom player and imports our custom-input.js component from localhost. 
+        </p>
+        <p>
+
+            Try entering some text into the input.
+        </p>
+        <p>
+
+            Try editing the custom-input.js file and refresh the page.
+        </p>
+        <p>
+
+            Try inspecting the styling in your browser developer tools and then adding some more CSS overrides to the index.html file.
+        </p>
+        <p>
+            If you have the React Developer Tools extension installed in your browser go to the "Components" tab and select a `Context.Provider` component. You'll see each one contains some state data in the value (a React context value https://reactjs.org/docs/context.html). The most interesting of these is the one that contains a property called state in it's context value. This is the main application state, you may notice that it maintains the same shape as a response from the API. If you interact with the flow you will see live updates to this state object.
+
+        </p>
+    </body>
+</html>
+
+
+
