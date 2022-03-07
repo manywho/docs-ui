@@ -5,13 +5,11 @@
  * A custom component file must be an ES module which exposes the component as its default export.
  */
 
-// Destructuring the window.boomi object;
-const {
-    flow: {
-        React,
-        hooks: { useComponent },
-    },
-} = window.boomi;
+// The window.boomi object;
+const flow = window.boomi.flow;
+
+const React = flow.React;
+const hooks = flow.hooks;
 
 // Create an alias so we don't have to write out React.createElement every time
 const $ = React.createElement;
@@ -36,7 +34,7 @@ const CustomInput = ({ id }) => {
     // Get the component object from the application state
     // along with a function to update a component
     // by calling the useComponent hook with the component ID.
-    const { component, updateComponent } = useComponent({ componentId: id });
+    const { component, updateComponent } = hooks.useComponent({ componentId: id });
 
     const onInput = ({ target: { value } }) =>
         updateComponent(
