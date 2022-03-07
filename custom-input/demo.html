@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="robots" content="noindex" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="description" content="Boomi Flow Application" />
+        <meta name="theme-color" content="#033d58" />
+
+        <base href="https://us-assets.flow-prod.boomi.com/runtime/nextgen/" />
+
+        <title>Flow</title>
+
+        <link rel="shortcut icon" href="img/favicon/favicon.ico" type="image/x-icon" />
+        <link rel="apple-touch-icon" sizes="144x144" href="img/favicon/144x144.png" />
+
+        <link href="flow.css" rel="stylesheet" />
+
+        <style>
+            html,
+            body,
+            #flow-app {
+                height: 100%;
+                margin: 0;
+            }
+        </style>
+
+        <!-- A few custom colours -->
+        <style>
+            .flow {
+                --color-font: rgb(255, 255, 255);
+                --color-background: rgb(44, 44, 44);
+                --color-primary: #464646;
+            }
+        </style>
+
+        <!-- 
+            Custom components can be included by adding a "components" section to the options. 
+            For each component add the component name as the key and an ES module script url as the value 
+        -->
+        <script
+            id="flow-script"
+            src="flow.js"
+            type="module"
+            defer
+            data-options='{
+            "platformUri": "https://flow.boomi.com",
+            "components": {
+                "input": "https://manywho.github.io/docs-ui/custom-input/custom-input.js"
+            }
+        }'
+        ></script>
+    </head>
+
+    <body>
+        <div id="flow-app"></div>
+    </body>
+</html>
