@@ -1,75 +1,53 @@
 /**
- * Example of a custom 'input' component.
+ * Example of custom InputText component.
  * This file would need to be available from a public url.
  * The component could then be registered using the components property of the options JSON supplied to the flow.js script.
- * A custom component file must be an ES module which exposes the component as its default export.
+ *
+ * The component renders a text input which generates a hex colour code from the characters of its text value.
+ * This colour code is then applied to the background colour of the text input making it change colour as the user types.
  */
 
-// The window.boomi object;
-const flow = window.boomi.flow;
-
-const React = flow.React;
-const hooks = flow.hooks;
-
-// Create an alias so we don't have to write out React.createElement every time
-const $ = React.createElement;
-
-// Converts any string into a hex colour code
-const stringToColour = function (str) {
-    let hash = 0;
-    for (var i = 0; i < str.length; i++) {
-        hash = str.charCodeAt(i) + ((hash << 5) - hash);
-    }
-    let colour = '#';
-    for (var i = 0; i < 3; i++) {
-        var value = (hash >> (i * 8)) & 0xff;
-        colour += ('00' + value.toString(16)).slice(-2);
-    }
-    return colour;
-};
-
-// Our custom input component.
-// Changes the background colour of the input as the user types into it.
-const CustomInput = ({ id }) => {
-    // Get the component object from the application state
-    // along with a function to update a component
-    // by calling the useComponent hook with the component ID.
-    const { component, updateComponent } = hooks.useComponent({ componentId: id });
-
-    const onInput = ({ target: { value } }) =>
-        updateComponent(
-            // Pass the component ID
-            component.id,
-            // Pass a partial component object with any updates
-            {
-                contentValue: value,
-            },
-            // Do not notify subscribers (collaborators, page conditions) on every character change
-            { notifySubscribers: false },
-        );
-
-    const onBlur = ({ target: { value } }) =>
-        updateComponent(component.id, {
-            contentValue: value,
-        });
-
-    // Generate a colour based on the contentValue of the component if its not empty
-    const backgroundColor =
-        component.contentValue === '' ? '' : stringToColour(component.contentValue ?? '');
-
-    // Return a React input element
-    return $('input', {
-        style: { backgroundColor },
-        type: 'text',
-        className: 'input custom-input',
-        id: component.id,
-        value: component.contentValue ?? '',
-        onInput,
-        onBlur,
-        readOnly: !component.isEditable,
-        disabled: !component.isEnabled,
-        required: component.isRequired,
-    });
-};
-
-export default CustomInput;
+ const { React } = window.boomi.flow;
+ 
+ /** Generates a numeric value from a string */
+ function hashCode(str) {
+     var hash = 0;
+     for (var i = 0; i < str.length; i++) {
+         hash = str.charCodeAt(i) + ((hash << 5) - hash);
+     }
+     return hash;
+ }
+ 
+ /** Converts a numeric value into hexadecimal RGB colour value */
+ function intToRGB(i) {
+     var c = (i & 0x00ffffff).toString(16).toUpperCase();
+ 
+     return '00000'.substring(0, 6 - c.length) + c;
+ }
+ 
+ // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+ const InputText = ({ element, updateElement, fireEvents }) => {
+ 
+     const onInput = ({ target: { value } }) =>
+         updateElement(element.id, {
+             contentValue: value,
+         });
+ 
+     const onBlur = () => {
+         fireEvents(element.id);
+     };
+ 
+     const colourCode = intToRGB(hashCode(element.contentValue ?? ''));
+ 
+     return React.createElement('input', {
+             style: { backgroundColor: `#${colourCode}` },
+             className: 'input',
+             id: element.id,
+             value: element.contentValue ?? '',
+             onInput,
+             onBlur,
+         }) 
+    };
+ 
+ export default InputText;
+ 
