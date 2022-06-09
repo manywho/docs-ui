@@ -25,7 +25,6 @@ function intToRGB(i) {
     return '00000'.substring(0, 6 - c.length) + c;
 }
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const InputText = ({ element, updateElement, fireEvents }) => {
     const onInput = ({ target: { value } }) =>
         updateElement(element.id, {
